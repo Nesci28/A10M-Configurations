@@ -1098,10 +1098,10 @@
 #endif
 
 #if HAS_GRAPHICAL_LCD && EITHER(SDSUPPORT, LCD_SET_PROGRESS_MANUALLY)
-  //#define PRINT_PROGRESS_SHOW_DECIMALS // Show progress with decimal digits
+  #define PRINT_PROGRESS_SHOW_DECIMALS // Show progress with decimal digits
   #define SHOW_REMAINING_TIME          // Display estimated time to completion
   #if ENABLED(SHOW_REMAINING_TIME)
-    //#define USE_M73_REMAINING_TIME     // Use remaining time from M73 command instead of estimation
+    #define USE_M73_REMAINING_TIME     // Use remaining time from M73 command instead of estimation
     #define ROTATE_PROGRESS_DISPLAY    // Display (P)rogress, (E)lapsed, and (R)emaining time
   #endif
 #endif
@@ -1248,7 +1248,7 @@
    *
    * [1] On AVR an interrupt-capable pin is best for UHS3 compatibility.
    */
-  #define USB_FLASH_DRIVE_SUPPORT
+  // #define USB_FLASH_DRIVE_SUPPORT
   #if ENABLED(USB_FLASH_DRIVE_SUPPORT)
     #define USB_CS_PIN    SDSS
     #define USB_INTR_PIN  SD_DETECT_PIN

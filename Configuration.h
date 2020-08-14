@@ -130,15 +130,15 @@
  *
  * :[2400, 9600, 19200, 38400, 57600, 115200, 250000, 500000, 1000000]
  */
-#define BAUDRATE 115200
+#define BAUDRATE 250000
 
 // Enable the Bluetooth serial interface on AT90USB devices
 //#define BLUETOOTH
 
 // Choose the name from boards.h that matches your setup
-#ifndef MOTHERBOARD 
+#ifndef MOTHERBOARD
   #if ENABLED(SKR_14_Turbo)
-    #define MOTHERBOARD BOARD_BTT_SKR_V1_4_TURBO 
+    #define MOTHERBOARD BOARD_BTT_SKR_V1_4_TURBO
   #else
     #define MOTHERBOARD BOARD_MELZI_CREALITY
   #endif
@@ -483,7 +483,7 @@
   #define HEATER_0_MAXTEMP 300
 #elif ENABLED(E3D_Extreme)
   #define HEATER_0_MAXTEMP 320
-#else 
+#else
   #define HEATER_0_MAXTEMP 275
 #endif
 #define HEATER_1_MAXTEMP 300
@@ -519,9 +519,9 @@
 
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
   // A10M
-  #define  DEFAULT_Kp 45.80
-  #define  DEFAULT_Ki 3.61
-  #define  DEFAULT_Kd 145.39 
+  #define DEFAULT_Kp 48.89
+  #define DEFAULT_Ki 4.40
+  #define DEFAULT_Kd 135.84
 
   // Creality Ender-5
   // #define DEFAULT_Kp 21.89
@@ -579,9 +579,9 @@
   //#define PID_BED_DEBUG // Sends debug data to the serial port.
 
   // SKR1.4 Turbo
-  #define DEFAULT_bedKp 126.13
-  #define DEFAULT_bedKi 4.30
-  #define DEFAULT_bedKd 924.76  
+  #define DEFAULT_bedKp 85.42
+  #define DEFAULT_bedKi 16.04
+  #define DEFAULT_bedKd 303.21
 
   //120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
   //from FOPDT model - kp=.39 Tp=405 Tdead=66, Tc set to 79.2, aggressive factor of .15 (vs .1, 1, 10)
@@ -806,7 +806,7 @@
  * Override with M203
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 600, 600, 10, 30 }
+#define DEFAULT_MAX_FEEDRATE          { 600, 600, 10, 25 }
 
 //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
@@ -819,7 +819,7 @@
  * Override with M201
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_ACCELERATION      { 2000, 2000, 200, 10000 }
+#define DEFAULT_MAX_ACCELERATION      { 2000, 2000, 200, 1000 }
 
 //#define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2
 #if ENABLED(LIMITED_MAX_ACCEL_EDITING)
@@ -834,9 +834,9 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-#define DEFAULT_ACCELERATION          500    // X, Y, Z and E acceleration for printing moves
-#define DEFAULT_RETRACT_ACCELERATION  500    // E acceleration for retracts
-#define DEFAULT_TRAVEL_ACCELERATION   500    // X, Y, Z acceleration for travel (non printing) moves
+#define DEFAULT_ACCELERATION          2000    // X, Y, Z and E acceleration for printing moves
+#define DEFAULT_RETRACT_ACCELERATION  1000    // E acceleration for retracts
+#define DEFAULT_TRAVEL_ACCELERATION   2000    // X, Y, Z acceleration for travel (non printing) moves
 
 /**
  * Default Jerk limits (mm/s)
@@ -870,7 +870,7 @@
  *   https://blog.kyneticcnc.com/2018/10/computing-junction-deviation-for-marlin.html
  */
 #if DISABLED(CLASSIC_JERK)
-  #define JUNCTION_DEVIATION_MM 0.018  // (mm) Distance from real junction edge
+  #define JUNCTION_DEVIATION_MM 0.15  // (mm) Distance from real junction edge
   #define JD_HANDLE_SMALL_SEGMENTS    // Use curvature estimation instead of just the junction angle
                                       // for small segments (< 1mm) with large junction angles (> 135°).
 #endif
@@ -1181,8 +1181,8 @@
 // @section machine
 
 // The size of the print bed
-#define X_BED_SIZE 235
-#define Y_BED_SIZE 235
+#define X_BED_SIZE 230
+#define Y_BED_SIZE 230
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
 #define X_MIN_POS 0
@@ -1371,7 +1371,7 @@
 
   #define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
-  #define MESH_INSET 35              // Set Mesh bounds as an inset region of the bed
+  #define MESH_INSET 1              // Set Mesh bounds as an inset region of the bed
   #define GRID_MAX_POINTS_X 10      // Don't use more than 15 points per axis, implementation limited.
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
@@ -1446,12 +1446,12 @@
 #define Z_SAFE_HOMING
 
 #if ENABLED(Z_SAFE_HOMING)
-  #define Z_SAFE_HOMING_X_POINT X_CENTER  // X point for Z homing
-  #define Z_SAFE_HOMING_Y_POINT Y_CENTER  // Y point for Z homing
+  #define Z_SAFE_HOMING_X_POINT ((X_BED_SIZE) / 2)  // X point for Z homing
+  #define Z_SAFE_HOMING_Y_POINT ((Y_BED_SIZE) / 2)  // Y point for Z homing
 #endif
 
 // Homing speeds (mm/m)
-#define HOMING_FEEDRATE_XY (20*60)
+#define HOMING_FEEDRATE_XY (50*60)
 #define HOMING_FEEDRATE_Z  (4*60)
 
 // Validate that endstops are triggered on homing moves
@@ -1585,7 +1585,7 @@
 
 #if ENABLED(NOZZLE_PARK_FEATURE)
   // Specify a park position as { X, Y, Z_raise }
-  #define NOZZLE_PARK_POINT { (X_MIN_POS + 10), (Y_MIN_POS + 10), 20 }
+  #define NOZZLE_PARK_POINT { (X_MIN_POS + 20), (Y_MIN_POS -20), 20 }
   //#define NOZZLE_PARK_X_ONLY          // X move only is required to park
   //#define NOZZLE_PARK_Y_ONLY          // Y move only is required to park
   #define NOZZLE_PARK_Z_RAISE_MIN   2   // (mm) Always raise Z by at least this distance
@@ -1631,7 +1631,7 @@
  * Attention: EXPERIMENTAL. G-code arguments may change.
  *
  */
-//#define NOZZLE_CLEAN_FEATURE
+#define NOZZLE_CLEAN_FEATURE
 
 #if ENABLED(NOZZLE_CLEAN_FEATURE)
   // Default number of pattern repetitions
@@ -1642,11 +1642,11 @@
 
   // Specify positions for each tool as { { X, Y, Z }, { X, Y, Z } }
   // Dual hotend system may use { {  -20, (Y_BED_SIZE / 2), (Z_MIN_POS + 1) },  {  420, (Y_BED_SIZE / 2), (Z_MIN_POS + 1) }}
-  #define NOZZLE_CLEAN_START_POINT { {  30, 30, (Z_MIN_POS + 1) } }
-  #define NOZZLE_CLEAN_END_POINT   { { 100, 60, (Z_MIN_POS + 1) } }
+  #define NOZZLE_CLEAN_START_POINT { {  0, 10, (Z_MIN_POS + 5) } }
+  #define NOZZLE_CLEAN_END_POINT   { { 8, 50, (Z_MIN_POS + 5) } }
 
   // Circular pattern radius
-  #define NOZZLE_CLEAN_CIRCLE_RADIUS 6.5
+  #define NOZZLE_CLEAN_CIRCLE_RADIUS 4
   // Circular pattern circle fragments number
   #define NOZZLE_CLEAN_CIRCLE_FN 10
   // Middle point of circle
@@ -1692,7 +1692,7 @@
  *
  * View the current statistics with M78.
  */
-//#define PRINTCOUNTER
+#define PRINTCOUNTER
 
 //=============================================================================
 //============================= LCD and SD support ============================
@@ -1847,8 +1847,8 @@
 // Note: Test audio output with the G-Code:
 //  M300 S<frequency Hz> P<duration ms>
 //
-#define LCD_FEEDBACK_FREQUENCY_DURATION_MS 4
-#define LCD_FEEDBACK_FREQUENCY_HZ 5000
+// #define LCD_FEEDBACK_FREQUENCY_DURATION_MS 4
+// #define LCD_FEEDBACK_FREQUENCY_HZ 5000
 
 //=============================================================================
 //======================== LCD / Controller Selection =========================
@@ -1861,7 +1861,7 @@
 //
 // Note: Usually sold with a white PCB.
 //
-//#define REPRAP_DISCOUNT_SMART_CONTROLLER
+// #define REPRAP_DISCOUNT_SMART_CONTROLLER
 
 //
 // Original RADDS LCD Display+Encoder+SDCardReader
@@ -1877,7 +1877,7 @@
 //
 // ULTIPANEL as seen on Thingiverse.
 //
-//#define ULTIPANEL
+#define ULTIPANEL
 
 //
 // PanelOne from T3P3 (via RAMPS 1.4 AUX2/AUX3)
