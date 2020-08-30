@@ -7,7 +7,7 @@
 M140 S{material_bed_temperature_layer_0} ; start preheating the bed
 M104 S{material_print_temperature_layer_0} ﻿T0 ; start preheating hotend
 G28 ; home
-G1 X0.1 Y20 Z0.3 F5000.0 ; Move to start position
+G1 X0.1 Y1 Z0.3 F5000.0 ; Move to start position
 M190 S{material_bed_temperature_layer_0} ; heat to Cura Bed setting
 M109 S{material_print_temperature_layer_0} ﻿T0 ; heat to Cura Hotend
 ;*** End Preheating ***
@@ -40,14 +40,20 @@ M163 S0 P0.25
 M163 S1 P0.75
 M164 S4
 
+;------------------------------------------
+; *** Redefining 0, 0 Coords
+G28 X Y
+G92 X0 Y0	  ; re-define origin
+G92 E0 ; Reset Extruder
+
 ​;------------------------------------------
 ;*** Draw a Nozzle Cleaning line on the Left Side of Bed
-G92 E0 ; Reset Extruder
+
 G1 Z2.0 F3000 ; Move Z Axis up little
-G1 X0.1 Y20 Z0.3 F5000.0 ; Move to start position
-G1 X0.1 Y200.0 Z0.3 F1500.0 E15 ; Draw the first line
-G1 X0.4 Y200.0 Z0.3 F5000.0 ; Move to side a little
-G1 X0.4 Y20 Z0.3 F1500.0 E30 ; Draw the second line
+G1 X0.1 Y0.1 Z0.3 F5000.0 ; Move to start position
+G1 X0.1 Y220.0 Z0.3 F1500.0 E15 ; Draw the first line
+G1 X0.4 Y220.0 Z0.3 F5000.0 ; Move to side a little
+G1 X0.4 Y0.1 Z0.3 F1500.0 E30 ; Draw the second line
 G92 E0 ; Reset Extruder
 G1 Z2.0 F3000 ; Move Z Axis up little
 G1 X5 Y20 Z0.3 F5000.0 ; Move over to prevent blob squish

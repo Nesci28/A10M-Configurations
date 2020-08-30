@@ -50,24 +50,33 @@ M428
 M500
 
 ### BLTouch Offsets
+M851 (To check infos)
 M851 [X<linear>] [Y<linear>] [Z<linear>]
-M851 X-52 Y-1 Z0
+M851 X-39 Y1 Z0
 M500
 
 ### Configure ESteps
-M92 (To check informations)
-M92 X79.38 Y80.03 Z407.32
-M92 Y
-80.79 = 19.9
-      = 20
-X = 81.2
-
-80.50 = 19.70
-      = 20
-Y = 81.73
-
-404.2 = 19.7
-      = 20
-Z = 410.36
-
+M92 (To check infos)
+M92 X81.2 Y81.73 Z410.36
 M500
+
+### StealthChop
+M569 (To check infos)
+M569 S0 Y
+M500
+
+### Bed Centering
+<!-- X:124.00 Y:-116.00 Z:-12.00 -->
+|------- 112.5 ------|
+|                    |
+|                    |
+|                    |
+|                    |
+112.5            112.5
+|                    |
+|                    |
+|                    |
+|                    |
+|------- 112.5 ------|
+X = 112.5 - 124 = -11.5
+Y = 112.5 - 116 = -3.5
